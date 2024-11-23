@@ -10,8 +10,8 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     return crud.create_user(db, user)
 
 @router.get("/getUser/{id}")
-def get_user(user: schemas.UserBase, db: Session = Depends(get_db), id: int):
-    user = crud.get_user(db, id=id)
+def get_user(id: int, user: schemas.UserBase, db: Session = Depends(get_db)):
+    user = crud.get_user(db, userID=id)
 
     if not user:
         return {"error": "User not found"}
