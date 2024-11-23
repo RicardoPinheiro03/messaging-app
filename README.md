@@ -25,7 +25,7 @@ I've used FastAPI for the back-end as the requirement indicated that the languag
 - The profile pictures should have a cloud storage where they were uploaded and retreived as necessary.
 
 ## Ideas for future improvments
-- Real-time interaction: having a RabbitMQ or a Redis ready and implemented for a real-time flow of sending out messages and receiving notifications. With this, a front-end would be necessary to be developed. This way, the solution would be fully scalable, with maybe with creation of MicroServices to even better up that scenario.
+- Real-time interaction: having a RabbitMQ or a Redis ready and implemented for a real-time flow of sending out messages and receiving notifications. With this, a front-end would be necessary to be developed. This way, the solution would be fully scalable, with maybe with creation of micro-services to even better up that scenario.
 
 - Deployment on cloud: it is the best way to test out the implementation. This would also imply to have better security (and not having the passwords or connection strings to the database, for instance, exposed on the code).
 
@@ -33,4 +33,31 @@ I've used FastAPI for the back-end as the requirement indicated that the languag
 
 - These two aforementioned ideas implied Infrastructure-as-Code to maintain homogeneity between environments and CI/CD for automated deployment/testing.
 
-- Adding a Content Delivery Network to allow the media uploaded into the messaging system to be delivered faster (and having the location of the users would facilitate this subject).
+- Adding a Content Delivery Network to allow the media uploaded into the messaging system to be delivered faster (and having the location of the users would facilitate this subject, besides the CDN solutions on the cloud providers do this automatically).
+
+## Instructions to run the code
+1. Clone the repository and create a folder called `venv`
+2. Run the following command to create the virtual environment: `python3 -m venv ./venv/`
+3. Activate the virtual environment: `source ./venv/bin/activate`
+4. Install the dependencies with: `pip install -r requirements.txt`
+5. Launch a postgres docker container with the following configuration:
+```bash
+docker run --name psqlContainer \
+  -e POSTGRES_USER=postgres \
+  -e POSTGRES_PASSWORD=123 \
+  -e POSTGRES_DB=msg_app \
+  -p 5432:5432 \
+  -d postgres
+```
+6. Perform the initial database migration (the database it's not persistent, so when the container gets turned off, the data is lost) using Alembic:
+```bash
+alembic init alembic
+alembic upgrade head
+```
+
+Also add this to the alembic.ini that is created and comment the previous definition: `sqlalchemy.url = postgresql://postgres:123@localhost:5432/msg_app`
+
+8. Run the application, create some users and send out some messages -- using Postman or curl:
+```
+uvicorn app.main:app --reload
+```
