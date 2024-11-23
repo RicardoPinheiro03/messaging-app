@@ -11,6 +11,16 @@ class UserCreate(UserBase):
 
 class MessageBase(BaseModel):
     text: str
-
+    
 class MessageCreate(MessageBase):
+    pass
+
+class SessionBase(BaseModel):
+    name: str
+
+class SessionBaseWithUsers(SessionBase):
+    user_a_id: int
+    user_b_id: int
+
+class SessionCreate(SessionBase):
     pass
