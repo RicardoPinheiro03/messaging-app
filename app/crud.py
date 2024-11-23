@@ -13,6 +13,7 @@ def get_user(db: Session, userID: int):
     return db_user
 
 def create_message(db: Session, text: str, session_id: int):
+    db_session = db.get(models.Session, session_id)
     db_message = models.Message(text=text, session_id=session_id)
     db.add(db_message)
     db.commit()

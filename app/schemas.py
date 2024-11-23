@@ -11,8 +11,7 @@ class UserCreate(UserBase):
 
 class MessageBase(BaseModel):
     text: str
-    session_id: int
-
+    
 class MessageCreate(MessageBase):
     pass
 

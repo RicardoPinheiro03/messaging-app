@@ -20,7 +20,7 @@ def get_user_route(id: int, db: Session = Depends(get_db)):
 
 @router.post("/user/{id}/profilePictureUpload/{mediaFile}")
 def upload_profile_picture(id: int, mediaFile: str, db: Session = Depends(get_db)):
-    user = crud.get_user(db, id=id)  # You would need to add `get_user` in `crud.py`.
+    user = crud.get_user(db, id=id)
     if not user:
         return {"error": "User not found"}
     user.profile_picture = mediaFile
