@@ -11,4 +11,4 @@ app = FastAPI()
 # Include the routers
 app.include_router(user.router, prefix="/user", tags=["user"])
 app.include_router(message.router, prefix="/message", tags=["message"])
-app.include_router(session.router, prefix="/session", tags=["session"])
+# app.include_router(session.router, prefix="/session", tags=["session"])
