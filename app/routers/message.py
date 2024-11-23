@@ -12,11 +12,11 @@ def get_db():
     finally:
         db.close()
 
-@router.post("/createUser/")
-def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    return crud.create_user(db, user)
+@router.post("/sendMsg/{id_userA}/to/{id_userB}/{sessionName}")
+def send_message(id_userA: int, id_userB: int, sessionName: str, message: schemas.MessageCreate, db: Session = Depends(get_db)):
+    session = crud.get_session_by_user_ids(id_userA, id_userB, db)
+    if not session:
+        crud.create_session(db, id_userA, id_userB, sessionName)
+    msg = crud.create_message(db, message)
 
-@router.post("/sendMsg/{idOfUserA}/to/{idOfUserB}")
-def send_message(idOfUserA: int, idOfUserB: int, message: schemas.MessageCreate, db: Session = Depends(get_db)):
-    # TODO: Add logic for session creation and message storage.
-    pass
+    return msg

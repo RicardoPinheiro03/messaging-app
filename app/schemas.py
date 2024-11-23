@@ -14,3 +14,14 @@ class MessageBase(BaseModel):
 
 class MessageCreate(MessageBase):
     pass
+
+class SessionBase(BaseModel):
+    name: str
+    pass
+
+class SessionBaseWithUsers(SessionBase):
+    id_user_a: int
+    id_user_b: int
+
+class SessionCreate(SessionBase):
+    pass
