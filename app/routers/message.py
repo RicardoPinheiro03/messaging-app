@@ -12,11 +12,13 @@ def get_db():
     finally:
         db.close()
 
-@router.post("/sendMsg/{id_userA}/to/{id_userB}/{sessionName}")
-def send_message(id_userA: int, id_userB: int, sessionName: str, message: schemas.MessageCreate, db: Session = Depends(get_db)):
-    session = crud.get_session_by_user_ids(id_userA, id_userB, db)
+@router.post("/sendMsg/{user_send_id}/to/{user_receive_id}/{session_name}")
+def send_message(user_send_id: int, user_receive_id: int, session_name: str, message: schemas.MessageCreate, db: Session = Depends(get_db)):
+    session = crud.get_session_by_user_ids(user_send_id, user_receive_id, db)
+    print(session.session_id)
     if not session:
-        crud.create_session(db, id_userA, id_userB, sessionName)
-    msg = crud.create_message(db, message)
+        crud.create_session(db, user_send_id, user_receive_id, session_name)
+    
+    msg = crud.create_message(db, message, session_id)
 
     return msg

@@ -12,8 +12,8 @@ def get_user(db: Session, userID: int):
     db_user = db.get(models.User, userID)
     return db_user
 
-def create_message(db: Session, text: str):
-    db_message = models.Message(text=text)
+def create_message(db: Session, text: str, session_id: int):
+    db_message = models.Message(text=text, session_id=session_id)
     db.add(db_message)
     db.commit()
     db.refresh(db_message)

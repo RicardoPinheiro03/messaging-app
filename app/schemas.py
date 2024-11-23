@@ -11,17 +11,17 @@ class UserCreate(UserBase):
 
 class MessageBase(BaseModel):
     text: str
+    session_id: int
 
 class MessageCreate(MessageBase):
     pass
 
 class SessionBase(BaseModel):
     name: str
-    pass
 
 class SessionBaseWithUsers(SessionBase):
-    id_user_a: int
-    id_user_b: int
+    user_a_id: int
+    user_b_id: int
 
 class SessionCreate(SessionBase):
     pass
