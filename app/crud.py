@@ -8,9 +8,17 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+def get_user(db: Session, userID: int):
+    db_user = models.User(id=userID)
+    db.get(db_user)
+    db.commit()
+    db.refresh(db_user)
+    return db_user
+
 def create_message(db: Session, text: str):
     db_message = models.Message(text=text)
     db.add(db_message)
     db.commit()
     db.refresh(db_message)
     return db_message
+
