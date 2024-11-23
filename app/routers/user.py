@@ -11,7 +11,12 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 
 @router.get("/getUser/{id}")
 def get_user(user: schemas.UserBase, db: Session = Depends(get_db), id: int):
-    user = 
+    user = crud.get_user(db, id=id)
+
+    if not user:
+        return {"error": "User not found"}
+
+    return user
 
 @router.post("/user/{id}/profilePictureUpload/{mediaFile}")
 def upload_profile_picture(id: int, mediaFile: str, db: Session = Depends(get_db)):
